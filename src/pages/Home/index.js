@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import {
-    Text,
     View,
-    Image,
-    ScrollView,
-    TouchableOpacity,
-    AsyncStorage,
-    Dimensions
 } from 'react-native';
+
+import Header from '../../components/Header'
 
 export default class Home extends Component {
     constructor(props) {
@@ -16,10 +12,14 @@ export default class Home extends Component {
     }
 
     render() {
+        const { navigation } = this.props
         return (
             <View>
-                <Text>Funcionou!</Text>
+                <Header
+                    onMenu={() => navigation.openDrawer()}
+                />
             </View>
         );
     }
 }
+

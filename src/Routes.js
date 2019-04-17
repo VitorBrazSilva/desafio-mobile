@@ -4,7 +4,6 @@ import {
     createAppContainer,
     createDrawerNavigator
 } from 'react-navigation'
-
 import Home from './pages/Home'
 
 import DrawerSidebar from './components/DrawerSidebar'
@@ -14,14 +13,14 @@ const Routes = createStackNavigator(
         Main: createDrawerNavigator({
             Home,
         },
-        {
-            transitionConfig: () => defaultTransaction(),
-            contentComponent: props => (<DrawerSidebar {...props}/>)
-        })
+            {
+                transitionConfig: () => defaultTransaction(),
+                contentComponent: props => (<DrawerSidebar {...props} />)
+            })
     },
-    {  
-        // headerMode: "none",
-        navigationOptions: {
+    {
+        headerMode: "none",
+        defaultNavigationOptions: {
             transitionConfig: () => defaultTransaction(),
         }
     }
