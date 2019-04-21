@@ -26,15 +26,16 @@ const styles = StyleSheet.create({
         height: '73%',
     },
     productsBox: {
-        width: 100,
-        margin: 15,
+        width: '44.5%',
+        margin: 10,
         backgroundColor: '#fff',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center'
     },
     imageProduct: {
-        width: 100,
-        height: 100,
+        width: 80,
+        height: 80,
+        resizeMode: 'contain',        
     }
 })
 

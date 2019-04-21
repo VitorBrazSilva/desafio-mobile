@@ -6,12 +6,11 @@ import {
     Image
 } from 'react-native';
 
-import products from './products.json'
 import styles from './styles'
-// import api from '../../services/api'
 import Header from '../../components/Header'
+import baseURL from '../../services/api'
 
-const baseURL = 'https://desafio.mobfiq.com.br/Search/Criteria';
+const pathUrl = 'Search/Criteria'
 const Size = 10;
 export default class Home extends Component {
     constructor(props) {
@@ -34,7 +33,7 @@ export default class Home extends Component {
 
         this.setState({ loading: true });
 
-        const response = await fetch(baseURL,
+        const response = await fetch(`${baseURL}${pathUrl}`,
             {
                 method: "POST",
                 headers: {
@@ -52,7 +51,6 @@ export default class Home extends Component {
             Offset: Offset + 10,
             loading: false,
         });
-        console.log(Offset, 'Nome')
     }
 
     render() {
@@ -60,7 +58,10 @@ export default class Home extends Component {
         return (
             <View style={styles.fullPage}>
                 <Header
+                    iconLeft="bars"
+                    iconSearch="search"
                     onMenu={() => navigation.openDrawer()}
+                    onSearch={() => navigation.navigate({ routeName: 'Search' })}
                 />
                 <View style={styles.titleBox}>
                     <Text style={styles.title}>PRODUTOS</Text>
@@ -78,9 +79,7 @@ export default class Home extends Component {
 
                                     <Image
                                         style={styles.imageProduct}
-                                        source={{
-                                            uri: `${item.Skus[0].Images[0].ImageUrl}`
-                                        }}
+                                        source={{uri: `${item.Skus[0].Images[0].ImageUrl}`}}
                                     />
 
                                     <Text>
@@ -98,6 +97,7 @@ export default class Home extends Component {
 
                                 </View>
                         }
+                        numColumns={2}
                         keyExtractor={(item, index) => index.toString()}
                         onEndReached={this.getProducts}
                         onEndReachedThreshold={0.1}

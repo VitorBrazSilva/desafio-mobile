@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
     View,
     TouchableOpacity,
+    TextInput
 } from 'react-native';
 import styles from './styles';
 
@@ -10,24 +11,42 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 export default class Home extends Component {
     constructor(props) {
         super(props)
-        this.state = {}
+        this.state = {
+            inputSearch: false
+        }
     }
 
     render() {
-        
+
+        let searchState = this.props.input
+        // this.setState({ inputSearch: searchState })
+
         return (
             <View style={styles.boxHeader}>
                 <TouchableOpacity
                     onPress={this.props.onMenu}
                 >
-                    <Icon name="bars" size={25} color="#fff" />
+                    <Icon name={this.props.iconLeft} size={25} color="#fff" />
                 </TouchableOpacity>
-                <View style={styles.boxIcons}>
-                    <TouchableOpacity>
-                        <Icon name="search" size={25} color="#fff" />
-                    </TouchableOpacity>
-                    <Icon name="shopping-cart" size={25} color="#fff" />
-                </View>
+                {
+                    !this.state.inputSearch
+                        ?
+                        <View style={styles.boxIcons}>
+                            <TouchableOpacity
+                                onPress={this.props.onSearch}
+                            >
+                                <Icon name={this.props.iconSearch} size={25} color="#fff" />
+                            </TouchableOpacity>
+                            <Icon name="shopping-cart" size={25} color="#fff" />
+                        </View>
+                        :
+                        <View style={styles.boxIcons}>
+                            <TextInput
+                                {...this.props}
+                                editable={true}
+                            />
+                        </View>
+                }
             </View>
         );
     }
