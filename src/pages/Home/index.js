@@ -55,6 +55,7 @@ export default class Home extends Component {
 
     render() {
         const { navigation } = this.props
+        console.log(this.state, "estados")
         return (
             <View style={styles.fullPage}>
                 <Header
@@ -79,20 +80,23 @@ export default class Home extends Component {
 
                                     <Image
                                         style={styles.imageProduct}
-                                        source={{uri: `${item.Skus[0].Images[0].ImageUrl}`}}
+                                        source={{ uri: `${item.Skus[0].Images[0].ImageUrl}` }}
                                     />
 
-                                    <Text>
-                                        {`Nome Produto: ${item.Skus[0].Name}`}
+                                    <Text style={[styles.nameProduct, styles.textPattern]}>
+                                        {`${item.Skus[0].Name}`} {/* Nome do produto */}
                                     </Text>
-                                    <Text>
-                                        {`Preço de Tabela: ${item.Skus[0].Sellers[0].ListPrice}`}
+
+                                    <Text style={[styles.listPrice, styles.textPattern]}>
+                                        {`${item.Skus[0].Sellers[0].ListPrice.toFixed(2)}`} {/* Preço tabela */}
                                     </Text>
-                                    <Text>
-                                        {`Preço: ${item.Skus[0].Sellers[0].Price}`}
+                                    <Text style={[styles.price, styles.textPattern]}>
+                                        {`${item.Skus[0].Sellers[0].Price.toFixed(2)}`} {/* Preço */}
                                     </Text>
-                                    <Text>
-                                        {`${item.Skus[0].Sellers[0].BestInstallment.Count} x de ${item.Skus[0].Sellers[0].BestInstallment.Value}`}
+
+                                    <Text style={[styles.installment, styles.textPattern]}>
+                                        {/* Texto parcelamento */}
+                                        {`${item.Skus[0].Sellers[0].BestInstallment.Count} x de ${item.Skus[0].Sellers[0].BestInstallment.Value.toFixed(2)}`}
                                     </Text>
 
                                 </View>

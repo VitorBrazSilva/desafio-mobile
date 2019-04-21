@@ -29,14 +29,37 @@ const styles = StyleSheet.create({
         width: '44.5%',
         margin: 10,
         backgroundColor: '#fff',
-        justifyContent: 'flex-start',
-        alignItems: 'center'
+        alignItems: 'center',
+        padding: 15
     },
     imageProduct: {
         width: 80,
         height: 80,
         resizeMode: 'contain',        
-    }
+        marginVertical: 30
+    },
+    textPattern: {
+        fontSize: 12,
+        textAlign: 'center',
+    },
+    nameProduct:{
+        fontSize: 14,
+        color: '#000',
+        marginBottom: 15,
+    },
+    listPrice:{
+        textDecorationLine: 'line-through',
+        color: '#dfe4ea'
+    },
+    price:{
+        fontSize: 16,
+        fontWeight: '500',
+        color: '#259B24'
+    },
+    installment:{
+        color: '#259B24',
+        marginBottom: 5
+    },
 })
 
 export default styles
