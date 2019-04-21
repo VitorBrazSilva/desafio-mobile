@@ -11,118 +11,98 @@ import styles from './styles'
 // import api from '../../services/api'
 import Header from '../../components/Header'
 
+const baseURL = 'https://desafio.mobfiq.com.br/Search/Criteria';
+const Size = 10;
 export default class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
             loading: false,
             products: [],
-            url: '/Search/Criteria',
+            Offset: 0,
         }
     }
 
     componentDidMount() {
-        this.getProducts()
+        this.getProducts();
     }
 
-    first(element, index, array) {
-        console.log(array.indexOf(element) === index, 'afsdfsd')
-        return array.indexOf(element) === index
-    }
+    getProducts = async () => {
+        if (this.state.loading) return;
 
-    getProducts = () => {
+        const { Offset } = this.state;
 
-        const data = products
+        this.setState({ loading: true });
+
+        const response = await fetch(baseURL,
+            {
+                method: "POST",
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    Offset: Offset,
+                    Size: Size
+                })
+            })
+        const repositories = await response.json();
         this.setState({
-            products: data.Products,
-            loading: false
-        })
-
-        
-            // data.Products.map(item => {
-            //     let skuls = item.Skus[0]        
-            //     let images = skuls.Images[0].ImageUrl
-            //     let imageUrl = images
-            // })
-            
-        
-
-        // Bloco buscando da API
-        // const url = 'https://desafio.mobfiq.com.br/Search/Criteria'
-        // this.setState({ loading: true })
-
-        // fetch(url, 
-        //     {
-        //         method: "POST",
-        //         headers: {
-        //             Accept: 'application/json',
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify({
-        //             Offset: 0,
-        //             Size: 1
-        //         })
-        //     })
-        //    .then(res => res.json())
-        //    .then(res => {
-        //         this.setState({
-        //             products: res.Products,
-        //             loading: false
-        //         })
-        //         console.log(res, 'Nome')
-        //    })
+            products: [...this.state.products, ...repositories.Products],
+            Offset: Offset + 10,
+            loading: false,
+        });
+        console.log(Offset, 'Nome')
     }
 
     render() {
         const { navigation } = this.props
-        if (this.state.loading) {
-            return (
-                <View>
-                    <Header
-                        onMenu={() => navigation.openDrawer()}
-                    />
-                    <View style={styles.titleBox}>
-                        <Text style={styles.title}>PRODUTOS</Text>
-                    </View>
-                    <View>
-                        <Text>Listando Produtos...</Text>
-                    </View>
-                </View>
-            )
-        }
-
         return (
-            <View>
+            <View style={styles.fullPage}>
                 <Header
                     onMenu={() => navigation.openDrawer()}
                 />
                 <View style={styles.titleBox}>
                     <Text style={styles.title}>PRODUTOS</Text>
                 </View>
-                <FlatList 
-                    data={this.state.products}
-                    renderItem={
-                        ({ item }) => 
-                        
-                        <View style={styles.boxProducts}>
 
-                            <Image
-                                style={styles.imageProduct}
-                                source={{ 
-                                    uri: `${item.Skus[0].Images[0].ImageUrl}`
-                                }}
-                            />
-                            
-                            <Text>
-                            {item.Skus[0].Name}
-                            </Text>
-                            
-                        </View>
-                    }
-                    keyExtractor={(item, index) => index.toString()}
-                
-                
-                />
+                <View>
+
+                    <FlatList
+                        data={this.state.products}
+                        style={styles.flatBox}
+                        renderItem={
+                            ({ item }) =>
+
+                                <View style={styles.productsBox}>
+
+                                    <Image
+                                        style={styles.imageProduct}
+                                        source={{
+                                            uri: `${item.Skus[0].Images[0].ImageUrl}`
+                                        }}
+                                    />
+
+                                    <Text>
+                                        {`Nome Produto: ${item.Skus[0].Name}`}
+                                    </Text>
+                                    <Text>
+                                        {`Preço de Tabela: ${item.Skus[0].Sellers[0].ListPrice}`}
+                                    </Text>
+                                    <Text>
+                                        {`Preço: ${item.Skus[0].Sellers[0].Price}`}
+                                    </Text>
+                                    <Text>
+                                        {`${item.Skus[0].Sellers[0].BestInstallment.Count} x de ${item.Skus[0].Sellers[0].BestInstallment.Value}`}
+                                    </Text>
+
+                                </View>
+                        }
+                        keyExtractor={(item, index) => index.toString()}
+                        onEndReached={this.getProducts}
+                        onEndReachedThreshold={0.1}
+                    />
+                </View>
             </View>
 
         );
