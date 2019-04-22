@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     },
     discountView:{
         width: '100%',
+        height: 40,
     },
     discountText:{
         width: 40,

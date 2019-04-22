@@ -80,12 +80,22 @@ export default class Home extends Component {
         if (valListPrice != valPrice) {
             let pricePorcent = (valPrice * 100) / valListPrice
             let porcentFinaly = 100 - pricePorcent
-            
-            return <View style={[styles.discountView]}>
+
+            return (
                 <Text style={[styles.discountText]}>
                     {`${porcentFinaly.toFixed(0)}%\nOFF`}
                 </Text>
-            </View>
+            )
+        }
+    }
+
+    verifyInstallment(item) {
+        let valListPrice = item.Skus[0].Sellers[0].ListPrice.toFixed(0)
+        if (valListPrice !== "0") {
+            return <Text style={[styles.installment, styles.textPattern]}>
+                {/* Texto parcelamento */}
+                {`${item.Skus[0].Sellers[0].BestInstallment.Count} x de ${item.Skus[0].Sellers[0].BestInstallment.Value.toFixed(2)}`}
+            </Text>
         }
     }
 
@@ -113,9 +123,11 @@ export default class Home extends Component {
                             ({ item }) =>
 
                                 <View style={styles.productsBox}>
-                                   
-                                    {this.porcentDiscount(item)}
-                                    
+
+                                    <View style={[styles.discountView]}>
+                                        {this.porcentDiscount(item)}
+                                    </View>
+
                                     <Image
                                         style={styles.imageProduct}
                                         source={{ uri: `${item.Skus[0].Images[0].ImageUrl}` }}
@@ -125,14 +137,8 @@ export default class Home extends Component {
                                         {`${item.Skus[0].Name}`} {/* Nome do produto */}
                                     </Text>
 
-                                    {
-                                        this.compareValues(item)
-                                    }                                    
-
-                                    <Text style={[styles.installment, styles.textPattern]}>
-                                        {/* Texto parcelamento */}
-                                        {`${item.Skus[0].Sellers[0].BestInstallment.Count} x de ${item.Skus[0].Sellers[0].BestInstallment.Value.toFixed(2)}`}
-                                    </Text>
+                                    {this.compareValues(item)}
+                                    {this.verifyInstallment(item)}
 
                                 </View>
                         }

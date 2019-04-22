@@ -62,6 +62,52 @@ export default class FoundProducts extends Component {
         });
     }
 
+    compareValues(item) {
+        let valListPrice = item.Skus[0].Sellers[0].ListPrice
+        let valPrice = item.Skus[0].Sellers[0].Price
+        if (valListPrice == valPrice) {
+            return <View>
+                <Text style={[styles.price, styles.textPattern]}>
+                    {`${item.Skus[0].Sellers[0].Price.toFixed(2)}`} {/* Preço */}
+                </Text>
+            </View>
+        } else {
+            return <View>
+                <Text style={[styles.listPrice, styles.textPattern]}>
+                    {`${item.Skus[0].Sellers[0].ListPrice.toFixed(2)}`} {/* Preço tabela */}
+                </Text>
+                <Text style={[styles.price, styles.textPattern]}>
+                    {`${item.Skus[0].Sellers[0].Price.toFixed(2)}`} {/* Preço */}
+                </Text>
+            </View>
+        }
+    }
+
+    porcentDiscount(item) {
+        let valListPrice = item.Skus[0].Sellers[0].ListPrice
+        let valPrice = item.Skus[0].Sellers[0].Price
+        if (valListPrice != valPrice) {
+            let pricePorcent = (valPrice * 100) / valListPrice
+            let porcentFinaly = 100 - pricePorcent
+
+            return (
+                <Text style={[styles.discountText]}>
+                    {`${porcentFinaly.toFixed(0)}%\nOFF`}
+                </Text>
+            )
+        }
+    }
+
+    verifyInstallment(item) {
+        let valListPrice = item.Skus[0].Sellers[0].ListPrice.toFixed(0)
+        if (valListPrice !== "0") {
+            return <Text style={[styles.installment, styles.textPattern]}>
+                {/* Texto parcelamento */}
+                {`${item.Skus[0].Sellers[0].BestInstallment.Count} x de ${item.Skus[0].Sellers[0].BestInstallment.Value.toFixed(2)}`}
+            </Text>
+        }
+    }
+
     render() {
 
         this.getProducts()
@@ -74,7 +120,7 @@ export default class FoundProducts extends Component {
                     iconLeft="arrow-left"
                     onMenu={() => {
                         navigation.goBack()
-                        this.setState({products:[]})
+                        this.setState({ products: [] })
                     }}
                     input={true}
                     textHeader="Resultado de Busca"
@@ -99,6 +145,10 @@ export default class FoundProducts extends Component {
 
                                 <View style={styles.productsBox}>
 
+                                    <View style={[styles.discountView]}>
+                                        {this.porcentDiscount(item)}
+                                    </View>
+
                                     <Image
                                         style={styles.imageProduct}
                                         source={{ uri: `${item.Skus[0].Images[0].ImageUrl}` }}
@@ -108,17 +158,8 @@ export default class FoundProducts extends Component {
                                         {`${item.Skus[0].Name}`} {/* Nome do produto */}
                                     </Text>
 
-                                    <Text style={[styles.listPrice, styles.textPattern]}>
-                                        {`${item.Skus[0].Sellers[0].ListPrice.toFixed(2)}`} {/* Preço tabela */}
-                                    </Text>
-                                    <Text style={[styles.price, styles.textPattern]}>
-                                        {`${item.Skus[0].Sellers[0].Price.toFixed(2)}`} {/* Preço */}
-                                    </Text>
-
-                                    <Text style={[styles.installment, styles.textPattern]}>
-                                        {/* Texto parcelamento */}
-                                        {`${item.Skus[0].Sellers[0].BestInstallment.Count} x de ${item.Skus[0].Sellers[0].BestInstallment.Value.toFixed(2)}`}
-                                    </Text>
+                                    {this.compareValues(item)}
+                                    {this.verifyInstallment(item)}
 
                                 </View>
                         }
