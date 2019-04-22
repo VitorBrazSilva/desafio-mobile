@@ -3,7 +3,7 @@ import {
     Dimensions
 } from 'react-native'
 
-const { height } = Dimensions.get('window')
+const { height, width } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
     fullPage: {
@@ -60,6 +60,19 @@ const styles = StyleSheet.create({
         color: '#259B24',
         marginBottom: 5
     },
+    discountView:{
+        width: '100%',
+    },
+    discountText:{
+        width: 40,
+        height: 40,
+        backgroundColor: '#259B24',
+        borderRadius: 20,
+        textAlign: 'center',
+        color: '#fff', 
+        fontWeight: '500',
+    },
+    
 })
 
 export default styles

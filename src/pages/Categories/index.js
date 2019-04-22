@@ -3,10 +3,11 @@ import {
     StyleSheet,
     Text,
     View,
-    TouchableOpacity
 } from 'react-native';
 
-export default class DrawerSidebar extends Component {
+import Header from '../../components/Header';
+
+export default class Categories extends Component {
     constructor(props) {
         super(props)
         this.state = {}
@@ -16,12 +17,11 @@ export default class DrawerSidebar extends Component {
         const { navigation } = this.props
         return (
             <View style={styles.container}>
-                <TouchableOpacity
-                    style={styles.buttonCategories}
-                    onPress={() => navigation.navigate('Categories')}
-                >
-                    <Text>Categorias</Text>
-                </TouchableOpacity>
+                <Header
+                    onMenu={() => navigation.goBack()}
+                    iconLeft='arrow-left'
+                    textHeader='Categorias'
+                />
             </View>
         );
     }

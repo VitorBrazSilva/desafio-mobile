@@ -53,8 +53,45 @@ export default class Home extends Component {
         });
     }
 
+    compareValues(item) {
+        let valListPrice = item.Skus[0].Sellers[0].ListPrice
+        let valPrice = item.Skus[0].Sellers[0].Price
+        if (valListPrice == valPrice) {
+            return <View>
+                <Text style={[styles.price, styles.textPattern]}>
+                    {`${item.Skus[0].Sellers[0].Price.toFixed(2)}`} {/* Preço */}
+                </Text>
+            </View>
+        } else {
+            return <View>
+                <Text style={[styles.listPrice, styles.textPattern]}>
+                    {`${item.Skus[0].Sellers[0].ListPrice.toFixed(2)}`} {/* Preço tabela */}
+                </Text>
+                <Text style={[styles.price, styles.textPattern]}>
+                    {`${item.Skus[0].Sellers[0].Price.toFixed(2)}`} {/* Preço */}
+                </Text>
+            </View>
+        }
+    }
+
+    porcentDiscount(item) {
+        let valListPrice = item.Skus[0].Sellers[0].ListPrice
+        let valPrice = item.Skus[0].Sellers[0].Price
+        if (valListPrice != valPrice) {
+            let pricePorcent = (valPrice * 100) / valListPrice
+            let porcentFinaly = 100 - pricePorcent
+            
+            return <View style={[styles.discountView]}>
+                <Text style={[styles.discountText]}>
+                    {`${porcentFinaly.toFixed(0)}%\nOFF`}
+                </Text>
+            </View>
+        }
+    }
+
     render() {
         const { navigation } = this.props
+        console.log(this.state, "estados")
         return (
             <View style={styles.fullPage}>
                 <Header
@@ -76,7 +113,9 @@ export default class Home extends Component {
                             ({ item }) =>
 
                                 <View style={styles.productsBox}>
-
+                                   
+                                    {this.porcentDiscount(item)}
+                                    
                                     <Image
                                         style={styles.imageProduct}
                                         source={{ uri: `${item.Skus[0].Images[0].ImageUrl}` }}
@@ -86,12 +125,9 @@ export default class Home extends Component {
                                         {`${item.Skus[0].Name}`} {/* Nome do produto */}
                                     </Text>
 
-                                    <Text style={[styles.listPrice, styles.textPattern]}>
-                                        {`${item.Skus[0].Sellers[0].ListPrice.toFixed(2)}`} {/* Preço tabela */}
-                                    </Text>
-                                    <Text style={[styles.price, styles.textPattern]}>
-                                        {`${item.Skus[0].Sellers[0].Price.toFixed(2)}`} {/* Preço */}
-                                    </Text>
+                                    {
+                                        this.compareValues(item)
+                                    }                                    
 
                                     <Text style={[styles.installment, styles.textPattern]}>
                                         {/* Texto parcelamento */}
@@ -111,4 +147,3 @@ export default class Home extends Component {
         );
     }
 }
-
