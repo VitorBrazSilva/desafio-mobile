@@ -91,11 +91,11 @@ export default class Home extends Component {
 
     render() {
         const { navigation } = this.props
-        console.log(this.state, "estados")
         return (
             <View style={styles.fullPage}>
                 <Header
                     iconLeft="bars"
+                    iconRight="shopping-cart"
                     iconSearch="search"
                     onMenu={() => navigation.openDrawer()}
                     onSearch={() => navigation.navigate({ routeName: 'Search' })}
