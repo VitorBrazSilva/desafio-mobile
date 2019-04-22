@@ -13,36 +13,28 @@ export default class CategoriesInternal extends Component {
         super(props)
         this.state = {
             loading: false,
-            // subCategoriesItems: []
         }
     }
-
-    // getCategoriesItem = () => {
-    //     const { navigation } = this.props
-    //     const subCategories = navigation.getParam('subCategoriesItem')
-    //     console.log(subCategories.SubCategories, 'props')
-    //     this.setState({ subCategoriesItems: subCategories.SubCategories})
-    //     console.log(this.state.subCategoriesItems, 'Subcategorias')
-    // }
     
     render() {
         const { navigation } = this.props
         const subCategories = navigation.getParam('subCategoriesItem')
         
         return (
-            <View style={styles.container}>
+            <View>
                 <Header
                     onMenu={() => navigation.navigate('Categories')}
                     iconLeft='arrow-left'
                     textHeader={subCategories.Name}
                 />
                 <FlatList
+                    style={styles.flat}
                     data={subCategories.SubCategories}
                     renderItem={
                         ({ item }) =>
 
-                            <View>
-                                <Text>{item.Name}</Text>
+                            <View style={styles.container}>
+                                <Text style={styles.textSubCategories}>{item.Name}</Text>
                             </View>
                     }
                     keyExtractor={(item, index) => index.toString()}
@@ -55,16 +47,18 @@ export default class CategoriesInternal extends Component {
 }
 
 const styles = StyleSheet.create({
+    flat: {
+        height: '85%'
+    },
     container: {
         flexDirection: 'column',
-        alignItems: 'center',
         justifyContent: 'flex-start',
         width: '100%',
+        marginTop: 10,
     },
-    buttonCategories: {
+    textSubCategories: {
         width: '100%',
-        height: 40,
-        justifyContent: 'center',
+        height: 25,
         marginLeft: '10%'
     }
 });

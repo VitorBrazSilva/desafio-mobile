@@ -46,19 +46,21 @@ export default class Categories extends Component {
     render() {
         const { navigation } = this.props
         return (
-            <View style={styles.container}>
+            <View>
                 <Header
                     onMenu={() => navigation.goBack()}
                     iconLeft='arrow-left'
                     textHeader='Categorias'
                 />
                 <FlatList
+                    style={styles.flat}
                     data={this.state.categories}
                     renderItem={
                         ({ item }) =>
 
-                            <View>
+                            <View style={styles.container}>
                                 <TouchableOpacity
+                                    style={styles.buttonCategories}
                                     onPress={() => {
                                         navigation.navigate('CategoriesInternal', {
                                             subCategoriesItem: item
@@ -79,16 +81,18 @@ export default class Categories extends Component {
 }
 
 const styles = StyleSheet.create({
+    flat: {
+        height: '85%'
+    },
     container: {
         flexDirection: 'column',
-        alignItems: 'center',
         justifyContent: 'flex-start',
         width: '100%',
+        marginTop: 10
     },
     buttonCategories: {
         width: '100%',
-        height: 40,
-        justifyContent: 'center',
+        height: 25,
         marginLeft: '10%'
     }
 });
