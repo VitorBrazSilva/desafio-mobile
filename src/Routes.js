@@ -8,6 +8,7 @@ import Home from './pages/Home'
 import Search from './pages/Search'
 import FoundProducts from './pages/FoundProducts'
 import Categories from './pages/Categories'
+import CategoriesInternal from './pages/CategoriesInternal'
 
 import DrawerSidebar from './components/DrawerSidebar'
 
@@ -17,7 +18,8 @@ const Routes = createStackNavigator(
             Home,
             Search,
             FoundProducts,
-            Categories
+            Categories,
+            CategoriesInternal
         },
             {
                 transitionConfig: () => defaultTransaction(),
