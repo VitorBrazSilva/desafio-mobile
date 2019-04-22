@@ -15,6 +15,7 @@ import baseURL from '../../services/api'
 const pathUrl = 'Search/Criteria'
 const Size = 10;
 
+
 export default class FoundProducts extends Component {
 
     constructor(props) {
@@ -23,13 +24,9 @@ export default class FoundProducts extends Component {
             loading: false,
             products: [],
             Offset: 0,
-            query: ''
+            query: '',
+            countSearchItens: 0
         }
-    }
-
-
-    componentDidMount() {
-        this.getProducts();
     }
 
 
@@ -61,30 +58,35 @@ export default class FoundProducts extends Component {
             products: [...this.state.products, ...repositories.Products],
             Offset: Offset + 10,
             loading: false,
+            countSearchItens: repositories.Total
         });
     }
 
     render() {
 
+        this.getProducts()
+
         const { navigation } = this.props
         const search = this.props.navigation.getParam('inputSearch')
-    
         return (
             <View>
                 <Header
                     iconLeft="arrow-left"
-                    onMenu={() => navigation.goBack()}
+                    onMenu={() => {
+                        navigation.goBack()
+                        this.setState({products:[]})
+                    }}
                     input={true}
                     textHeader="Resultado de Busca"
                 />
                 <View style={stylesProduct.searchBox}>
                     <View>
-                        <Text style={[stylesProduct.text,stylesProduct.font]}>Você procurou por:</Text>
-                        <Text style={[stylesProduct.textSearch,stylesProduct.font]}>{search}</Text>
+                        <Text style={[stylesProduct.text, stylesProduct.font]}>Você procurou por:</Text>
+                        <Text style={[stylesProduct.textSearch, stylesProduct.font]}>{search}</Text>
                     </View>
                     <View style={stylesProduct.resultBox}>
-                        <Text style={[stylesProduct.textResult,stylesProduct.font]}></Text>
-                        <Text style={[stylesProduct.textResult,stylesProduct.font]}>Resultados</Text>
+                        <Text style={[stylesProduct.textResult, stylesProduct.font]}>{this.state.countSearchItens}</Text>
+                        <Text style={[stylesProduct.textResult, stylesProduct.font]}>Resultados</Text>
                     </View>
                 </View>
                 <View>
