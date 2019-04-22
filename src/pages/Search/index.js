@@ -8,6 +8,7 @@ import {
 
 import styles from './styles'
 import Header from '../../components/Header'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 export default class Search extends Component {
 
@@ -19,34 +20,35 @@ export default class Search extends Component {
     }
 
     changeText = (queryInput) => {
-        this.setState({queryInput})
+        this.setState({ queryInput })
     }
 
     render() {
         const { navigation } = this.props
-        
+
         return (
-            <View>
+            <View style={styles.containerFull}>
                 <Header
                     iconLeft="arrow-left"
                     onMenu={() => navigation.goBack()}
                     textHeader='Pesquisar'
                 />
-                <View>
-                    <Text>Pesquisar</Text>
+                <Text style={styles.text}>Digite no campo abaixo para pesquisar</Text>
+                <View style={styles.boxInput}>
                     <TextInput
+                        style={styles.input}
                         onChangeText={this.changeText}
                         value={this.state.queryInput}
                     />
                     <TouchableOpacity
                         onPress={() => {
                             navigation.navigate('FoundProducts', {
-                            inputSearch: this.state.queryInput 
-                        })
-                        this.setState({queryInput: ''})
-                    }}
+                                inputSearch: this.state.queryInput
+                            })
+                            this.setState({ queryInput: '' })
+                        }}
                     >
-                        <Text>Pesquisar</Text>
+                        <Icon name="search" color="#ed141b" size={20} />
                     </TouchableOpacity>
                 </View>
             </View>
