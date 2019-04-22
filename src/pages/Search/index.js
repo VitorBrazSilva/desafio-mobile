@@ -30,7 +30,7 @@ export default class Search extends Component {
                 <Header
                     iconLeft="arrow-left"
                     onMenu={() => navigation.goBack()}
-                    input={true}
+                    textHeader='Pesquisar'
                 />
                 <View>
                     <Text>Pesquisar</Text>
