@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
     View,
     TouchableOpacity,
-    TextInput
+    TextInput,
+    Text
 } from 'react-native';
 import styles from './styles';
 
@@ -28,6 +29,7 @@ export default class Home extends Component {
                 >
                     <Icon name={this.props.iconLeft} size={25} color="#fff" />
                 </TouchableOpacity>
+                <Text style={styles.textHeader}>{this.props.textHeader}</Text>
                 {
                     !this.state.inputSearch
                         ?

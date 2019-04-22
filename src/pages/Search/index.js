@@ -20,12 +20,11 @@ export default class Search extends Component {
 
     changeText = (queryInput) => {
         this.setState({queryInput})
-        
     }
 
     render() {
         const { navigation } = this.props
-
+        
         return (
             <View>
                 <Header
@@ -40,10 +39,12 @@ export default class Search extends Component {
                         value={this.state.queryInput}
                     />
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('FoundProducts',
-                        {
+                        onPress={() => {
+                            navigation.navigate('FoundProducts', {
                             inputSearch: this.state.queryInput 
-                        })}
+                        })
+                        this.setState({queryInput: ''})
+                    }}
                     >
                         <Text>Pesquisar</Text>
                     </TouchableOpacity>

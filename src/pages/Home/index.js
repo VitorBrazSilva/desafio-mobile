@@ -55,7 +55,6 @@ export default class Home extends Component {
 
     render() {
         const { navigation } = this.props
-        console.log(this.state, "estados")
         return (
             <View style={styles.fullPage}>
                 <Header

@@ -12,6 +12,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 30
     },
+    textHeader: {
+        fontSize: 20,
+        color: '#fff',
+        marginLeft: '5%'
+    },
     input: {
         width: 100,
         color: '#fff',
