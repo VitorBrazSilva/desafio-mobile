@@ -107,6 +107,7 @@ export default class Home extends Component {
                     iconLeft="bars"
                     iconRight="shopping-cart"
                     iconSearch="search"
+                    textHeader="POLISHOP"
                     onMenu={() => navigation.openDrawer()}
                     onSearch={() => navigation.navigate({ routeName: 'Search' })}
                 />
@@ -134,7 +135,11 @@ export default class Home extends Component {
                                     />
 
                                     <Text style={[styles.nameProduct, styles.textPattern]}>
-                                        {`${item.Skus[0].Name}`} {/* Nome do produto */}
+                                        {
+                                            item.Skus[0].Name.length >= 50
+                                            ? `${item.Skus[0].Name.substr(0, 50)}...` 
+                                            : `${item.Skus[0].Name}`
+                                        } {/* Nome do produto */}
                                     </Text>
 
                                     {this.compareValues(item)}

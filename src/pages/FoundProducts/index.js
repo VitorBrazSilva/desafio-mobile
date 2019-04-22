@@ -155,7 +155,11 @@ export default class FoundProducts extends Component {
                                     />
 
                                     <Text style={[styles.nameProduct, styles.textPattern]}>
-                                        {`${item.Skus[0].Name}`} {/* Nome do produto */}
+                                        {
+                                            item.Skus[0].Name.length >= 50
+                                                ? `${item.Skus[0].Name.substr(0, 50)}...`
+                                                : `${item.Skus[0].Name}`
+                                        } {/* Nome do produto */}
                                     </Text>
 
                                     {this.compareValues(item)}
